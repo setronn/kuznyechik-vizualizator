@@ -190,6 +190,34 @@ namespace KuznyechikVizualizator
                 labels.Add(lb2);
                 keyGrid.Children.Add(lb2);
 
+                TextBlock tb0 = new TextBlock
+                {
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Foreground = new SolidColorBrush(Color.FromRgb(127, 127, 127)),
+                    FontStyle = FontStyles.Italic
+                };
+                tb0.Inlines.Add(BitConverter.ToString(k.k[i].ToArray()).Replace("-", ""));
+                Grid.SetColumn(tb0, 1);
+                Grid.SetRow(tb0, i * 6 + 0);
+                Grid.SetColumnSpan(tb0, 3);
+                textBlocks.Add(tb0);
+                keyGrid.Children.Add(tb0);
+
+                TextBlock tb1 = new TextBlock
+                {
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Foreground = new SolidColorBrush(Color.FromRgb(127, 127, 127)),
+                    FontStyle = FontStyles.Italic
+                };
+                tb1.Inlines.Add(BitConverter.ToString(k.k[i + 1].ToArray()).Replace("-", ""));
+                Grid.SetColumn(tb1, 4);
+                Grid.SetRow(tb1, i * 6 + 0);
+                Grid.SetColumnSpan(tb1, 3);
+                textBlocks.Add(tb1);
+                keyGrid.Children.Add(tb1);
+
                 for (int j = 0; j < 3; ++j)
                 {
                     TextBlock tb = new TextBlock
@@ -200,7 +228,7 @@ namespace KuznyechikVizualizator
                         FontStyle = FontStyles.Italic
                     };
                     tb.Inlines.Add(BitConverter.ToString(k.keyGenRounds[3 * i + j].ToArray()).Replace("-", "").Substring(0, 16) + "\n" + BitConverter.ToString(k.keyGenRounds[3 * i + j].ToArray()).Replace("-", "").Substring(16, 16));
-                    Grid.SetColumn(tb, 1 + j * 2);
+                    Grid.SetColumn(tb, 5 - j * 2);
                     Grid.SetRow(tb, i * 6 + 1);
                     textBlocks.Add(tb);
                     keyGrid.Children.Add(tb);
@@ -270,6 +298,7 @@ namespace KuznyechikVizualizator
                 Grid.SetRow(s, i * 6 + 2);
                 buttons.Add(s);
                 keyGrid.Children.Add(s);
+                s.Click += new RoutedEventHandler(mainWindow.S_Click);
 
                 Button x1 = new Button
                 {

@@ -78,13 +78,6 @@
                        Width="225" 
                        Margin="0,90,80,0"
                        />
-                <Image Source="assets\arrow.png" 
-                       VerticalAlignment="Top"
-                       HorizontalAlignment="Center"
-                       Margin="0,110,0,0" 
-                       Width="100"
-                       Height="10"
-                       />
             </Grid>
         </Canvas>
 

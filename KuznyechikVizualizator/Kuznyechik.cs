@@ -13,8 +13,8 @@ namespace KuznyechikVizualizator
         public List<List<byte>> C;         //size = 32x{128b;16B}
         public List<List<byte>> k;         //size = 34x{128b;16B}
         public List<List<byte>> roundKeys; //size = 10x{128b;16B}
-        public List<List<byte>> keyGenRounds;    //size = over9000x{128b;16B}
-        public List<List<byte>> encryptRounds;    //size = 27x{128b;16B}
+        public List<List<byte>> keyGenRounds;    //size = 96x{128b;16B}
+        public List<List<byte>> encryptRounds;    //size = 28x{128b;16B}
         public List<byte> plaintext;       //size = {128b;32B}
         public List<byte> ciphertext;      //size = {128b;32B}
 
@@ -122,7 +122,9 @@ namespace KuznyechikVizualizator
              encryptRounds.Add(L(S(X(ciphertext, roundKeys[i]))));
              ciphertext = L(S(X(ciphertext, roundKeys[i])));
         }
+        
         ciphertext = X(ciphertext, roundKeys[9]);
+        encryptRounds.Add(ciphertext);
     }
 
     static public byte s(byte x)

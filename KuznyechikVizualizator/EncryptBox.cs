@@ -214,6 +214,7 @@ namespace KuznyechikVizualizator
                 Grid.SetRow(x, i * 3 + 1);
                 buttons.Add(x);
                 encryptGrid.Children.Add(x);
+                x.Click += new RoutedEventHandler(mainWindow.X_Click);
 
                 if (i == 9)
                 {
@@ -396,7 +397,7 @@ namespace KuznyechikVizualizator
             
         }
 
-        public static void DeleteContent(MainWindow mainWindow, Kuznyechik k)
+        public static void DeleteContent(MainWindow mainWindow)
         {
             object wantedNode = mainWindow.FindName("cryptTabScroller");
             ScrollViewer cryptTabScroller = wantedNode as ScrollViewer;
