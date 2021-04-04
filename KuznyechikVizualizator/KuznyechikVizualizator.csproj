@@ -52,7 +52,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>logo.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MaterialDesignColors, Version=2.0.0.2422, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
@@ -86,6 +87,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="LBoxVisualization.cs" />
     <Compile Include="SBoxVisualization.cs" />
     <Compile Include="XBoxVisualization.cs" />
     <Page Include="MainWindow.xaml">
@@ -133,9 +135,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="assets\logo.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="logo.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">

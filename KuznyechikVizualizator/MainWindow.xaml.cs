@@ -24,6 +24,7 @@ namespace KuznyechikVizualizator
             InitializeComponent();
             KeyGenBox.GenerateContent(mainWindow, k);
             EncryptBox.GenerateContent(mainWindow, k);
+            LBoxVisualization.GenerateContent(mainWindow, Kuznyechik.toList("e87de8b6e87de8b6b6b6b6b6b6b6b6b6"));
         }
 
         private void textBoxKey_TextChanged(object sender, TextChangedEventArgs e)

@@ -33,6 +33,7 @@ namespace KuznyechikVizualizator
             boxCanvas = new Canvas();
             boxCanvas.Margin = new Thickness(80, 10, 10, 10);
             Grid.SetRow(boxCanvas, 1);
+            mainGrid.Children.Add(boxCanvas);
 
             Grid grid1 = new Grid();
 
@@ -80,6 +81,7 @@ namespace KuznyechikVizualizator
             {
                 grid1.ColumnDefinitions.Add(columns[i]);
             }
+            boxCanvas.Children.Add(grid1);
 
 
             Rectangle sBound = new Rectangle
@@ -89,10 +91,8 @@ namespace KuznyechikVizualizator
             };
             Grid.SetColumnSpan(sBound, 18);
             Grid.SetRowSpan(sBound, 9);
-
-            mainGrid.Children.Add(boxCanvas);
-            boxCanvas.Children.Add(grid1);
             grid1.Children.Add(sBound);
+
 
             List<TextBox> textBoxes1 = new List<TextBox>();
             for (int i = 0; i < 16; ++i)
@@ -138,6 +138,20 @@ namespace KuznyechikVizualizator
 
             for (int i = 0; i < 16; ++i)
             {
+                Label l = new Label
+                {
+                    Content = "⊕",
+                    FontFamily = new FontFamily("Times New Roman"),
+                    Margin = new Thickness(0, -5, 0, 0),
+                    FontSize = 18,
+                    VerticalAlignment = VerticalAlignment.Top,
+                    HorizontalAlignment = HorizontalAlignment.Center
+                };
+                RenderOptions.SetEdgeMode(l, EdgeMode.Aliased);
+                Grid.SetColumn(l, 1 + i);
+                Grid.SetRow(l, 2);
+                grid1.Children.Add(l);
+
                 Line vertt = new Line
                 {
                     Stroke = Brushes.Black,

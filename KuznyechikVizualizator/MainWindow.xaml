@@ -20,10 +20,10 @@
         <Label x:Name="label_name1" Content="Variables" HorizontalAlignment="Center" VerticalAlignment="Center" Height="26" Margin="170,6,173,0" Width="61" />
 
         <Canvas x:Name="mainBlock" Grid.Column="0" Grid.Row="1">
-            <Grid x:Name="mainGrid" Width="800" Height="900">
+            <Grid x:Name="mainGrid" Width="800" Height="839">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="162"/>
-                    <RowDefinition Height="400"/>
+                    <RowDefinition Height="160"/>
+                    <RowDefinition Height="679"/>
                 </Grid.RowDefinitions>
                 <TextBox x:Name="textBoxPlaintext" 
                          HorizontalAlignment="Left" 
@@ -46,7 +46,7 @@
                        Content="Key" 
                        HorizontalAlignment="Center" 
                        Height="26" 
-                       Margin="0,10,0,0" 
+                       Margin="175,10,175,0" 
                        VerticalAlignment="Top" 
                        Width="450"  
                        HorizontalContentAlignment="Center"
@@ -58,7 +58,7 @@
                          VerticalAlignment="Top"
                          HorizontalAlignment="Center"
                          TextChanged="textBoxKey_TextChanged" 
-                         Margin="0,40,0,0"
+                         Margin="175,40,175,0"
                          />
                 <Label x:Name="labelPlaintext" 
                        Content=" Plaintext" 
@@ -84,12 +84,12 @@
         <TabControl x:Name="tabControl" Grid.Row="1" Grid.Column="2" Margin="0,0,20,20">
             <TabItem x:Name="cryptTab" Header="Encrypt">
                 <ScrollViewer x:Name="cryptTabScroller" VerticalScrollBarVisibility="Visible">
-                    
+
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="Keys">
                 <ScrollViewer x:Name="keyTabScroller" VerticalScrollBarVisibility="Visible">
-                    
+
                 </ScrollViewer>
             </TabItem>
         </TabControl>
