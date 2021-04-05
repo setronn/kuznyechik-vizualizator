@@ -83,7 +83,7 @@ namespace KuznyechikVizualizator
 
             //////////////////////////LOOP UIELEMENTS DEFINITION////////////////////////////
 
-            for (int i = 0; i < 32; ++i)
+            for (int i = 0; i < 33; ++i)
             {
                 Label lb0 = new Label
                 {
@@ -110,6 +110,39 @@ namespace KuznyechikVizualizator
                 Grid.SetRow(lb1, i * 6 + 0);
                 labels.Add(lb1);
                 keyGrid.Children.Add(lb1);
+
+                TextBlock tb0 = new TextBlock
+                {
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Foreground = new SolidColorBrush(Color.FromRgb(127, 127, 127)),
+                    FontStyle = FontStyles.Italic
+                };
+                tb0.Inlines.Add(BitConverter.ToString(k.k[i].ToArray()).Replace("-", ""));
+                Grid.SetColumn(tb0, 1);
+                Grid.SetRow(tb0, i * 6 + 0);
+                Grid.SetColumnSpan(tb0, 3);
+                textBlocks.Add(tb0);
+                keyGrid.Children.Add(tb0);
+
+                TextBlock tb1 = new TextBlock
+                {
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Foreground = new SolidColorBrush(Color.FromRgb(127, 127, 127)),
+                    FontStyle = FontStyles.Italic
+                };
+                tb1.Inlines.Add(BitConverter.ToString(k.k[i + 1].ToArray()).Replace("-", ""));
+                Grid.SetColumn(tb1, 4);
+                Grid.SetRow(tb1, i * 6 + 0);
+                Grid.SetColumnSpan(tb1, 3);
+                textBlocks.Add(tb1);
+                keyGrid.Children.Add(tb1);
+
+                if (i == 32)
+                {
+                    break;
+                }
 
                 Line vertt = new Line
                 {
@@ -190,33 +223,7 @@ namespace KuznyechikVizualizator
                 labels.Add(lb2);
                 keyGrid.Children.Add(lb2);
 
-                TextBlock tb0 = new TextBlock
-                {
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    Foreground = new SolidColorBrush(Color.FromRgb(127, 127, 127)),
-                    FontStyle = FontStyles.Italic
-                };
-                tb0.Inlines.Add(BitConverter.ToString(k.k[i].ToArray()).Replace("-", ""));
-                Grid.SetColumn(tb0, 1);
-                Grid.SetRow(tb0, i * 6 + 0);
-                Grid.SetColumnSpan(tb0, 3);
-                textBlocks.Add(tb0);
-                keyGrid.Children.Add(tb0);
-
-                TextBlock tb1 = new TextBlock
-                {
-                    HorizontalAlignment = HorizontalAlignment.Right,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    Foreground = new SolidColorBrush(Color.FromRgb(127, 127, 127)),
-                    FontStyle = FontStyles.Italic
-                };
-                tb1.Inlines.Add(BitConverter.ToString(k.k[i + 1].ToArray()).Replace("-", ""));
-                Grid.SetColumn(tb1, 4);
-                Grid.SetRow(tb1, i * 6 + 0);
-                Grid.SetColumnSpan(tb1, 3);
-                textBlocks.Add(tb1);
-                keyGrid.Children.Add(tb1);
+                
 
                 for (int j = 0; j < 3; ++j)
                 {
@@ -272,6 +279,7 @@ namespace KuznyechikVizualizator
                 Grid.SetRow(x0, i * 6 + 2);
                 buttons.Add(x0);
                 keyGrid.Children.Add(x0);
+                x0.Click += new RoutedEventHandler(mainWindow.X_Click);
 
                 Button l = new Button
                 {
@@ -285,6 +293,7 @@ namespace KuznyechikVizualizator
                 Grid.SetRow(l, i * 6 + 2);
                 buttons.Add(l);
                 keyGrid.Children.Add(l);
+                l.Click += new RoutedEventHandler(mainWindow.L_Click);
 
                 Button s = new Button
                 {
@@ -312,6 +321,7 @@ namespace KuznyechikVizualizator
                 Grid.SetRow(x1, i * 6 + 2);
                 buttons.Add(x1);
                 keyGrid.Children.Add(x1);
+                x1.Click += new RoutedEventHandler(mainWindow.X_Click);
 
                 Line l2 = new Line
                 {

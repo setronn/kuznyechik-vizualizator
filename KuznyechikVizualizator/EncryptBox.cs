@@ -247,6 +247,7 @@ namespace KuznyechikVizualizator
                 Grid.SetRow(l, i * 3 + 1);
                 buttons.Add(l);
                 encryptGrid.Children.Add(l);
+                l.Click += new RoutedEventHandler(mainWindow.L_Click);
 
                 Line t3 = new Line
                 {

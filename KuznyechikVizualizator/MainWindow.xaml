@@ -82,17 +82,15 @@
         </Canvas>
 
         <TabControl x:Name="tabControl" Grid.Row="1" Grid.Column="2" Margin="0,0,20,20">
-            <TabItem x:Name="cryptTab" Header="Encrypt">
-                <ScrollViewer x:Name="cryptTabScroller" VerticalScrollBarVisibility="Visible">
-
-                </ScrollViewer>
+            <TabItem Header="Intro">
             </TabItem>
             <TabItem Header="Keys">
-                <ScrollViewer x:Name="keyTabScroller" VerticalScrollBarVisibility="Visible">
-
-                </ScrollViewer>
+                <ScrollViewer x:Name="keyTabScroller" VerticalScrollBarVisibility="Visible"/>
+            </TabItem>
+            <TabItem x:Name="cryptTab" Header="Encrypt">
+                <ScrollViewer x:Name="cryptTabScroller" VerticalScrollBarVisibility="Visible"/>
             </TabItem>
         </TabControl>
-
+        
     </Grid>
 </Window>

@@ -24,7 +24,6 @@ namespace KuznyechikVizualizator
             InitializeComponent();
             KeyGenBox.GenerateContent(mainWindow, k);
             EncryptBox.GenerateContent(mainWindow, k);
-            LBoxVisualization.GenerateContent(mainWindow, Kuznyechik.toList("e87de8b6e87de8b6b6b6b6b6b6b6b6b6"));
         }
 
         private void textBoxKey_TextChanged(object sender, TextChangedEventArgs e)
@@ -38,6 +37,7 @@ namespace KuznyechikVizualizator
                 textBoxCiphertext.Text = k.ToString();
             }
             EncryptBox.RefreshContent(mainWindow, k);
+            KeyGenBox.RefreshContent(mainWindow, k);
         }
 
         private void textBoxPlaintext_TextChanged(object sender, TextChangedEventArgs e)
@@ -52,12 +52,56 @@ namespace KuznyechikVizualizator
             }
             EncryptBox.RefreshContent(mainWindow, k);
         }
+        public void X_Click(object sender, RoutedEventArgs e)
+        {
+            System.Console.Write("Clicked");
+            if (XBoxVisualization.IsActive() == true)
+            {
+                XBoxVisualization.DeleteContent(mainWindow);
+            }
+            if (SBoxVisualization.IsActive() == true)
+            {
+                SBoxVisualization.DeleteContent(mainWindow);
+            }
+            if (LBoxVisualization.IsActive() == true)
+            {
+                LBoxVisualization.DeleteContent(mainWindow);
+            }
+            Button b = sender as Button;
+            int x = EncryptBox.buttons.IndexOf(b);
+            if (x != -1)
+            {
+                XBoxVisualization.GenerateContent(mainWindow, k.encryptRounds[x], k.roundKeys[x / 3], k.encryptRounds[x + 1]);
+            }
+            x = KeyGenBox.buttons.IndexOf(b);
+            if (x != -1)
+            {
+                if (x % 4 == 3)
+                {
+                    XBoxVisualization.GenerateContent(mainWindow, k.k[x / 4 + 1], k.C[x / 4], k.keyGenRounds[x / 4 * 3]);
+                }
+
+                if (x % 4 == 0)
+                {
+                    XBoxVisualization.GenerateContent(mainWindow, k.k[x / 4], k.keyGenRounds[x / 4 * 3 + 2], k.k[x / 4 + 2]);
+                }
+            }
+
+        }
 
         public void S_Click(object sender, RoutedEventArgs e)
         {
             if (XBoxVisualization.IsActive() == true)
             {
                 XBoxVisualization.DeleteContent(mainWindow);
+            }
+            if (SBoxVisualization.IsActive() == true)
+            {
+                SBoxVisualization.DeleteContent(mainWindow);
+            }
+            if (LBoxVisualization.IsActive() == true)
+            {
+                LBoxVisualization.DeleteContent(mainWindow);
             }
             Button b = sender as Button;
             int x = EncryptBox.buttons.IndexOf(b);
@@ -74,18 +118,33 @@ namespace KuznyechikVizualizator
 
         }
 
-        public void X_Click(object sender, RoutedEventArgs e)
+        public void L_Click(object sender, RoutedEventArgs e)
         {
+            if (XBoxVisualization.IsActive() == true)
+            {
+                XBoxVisualization.DeleteContent(mainWindow);
+            }
             if (SBoxVisualization.IsActive() == true)
             {
                 SBoxVisualization.DeleteContent(mainWindow);
+            }
+            if (LBoxVisualization.IsActive() == true)
+            {
+                LBoxVisualization.DeleteContent(mainWindow);
             }
             Button b = sender as Button;
             int x = EncryptBox.buttons.IndexOf(b);
             if (x != -1)
             {
-                XBoxVisualization.GenerateContent(mainWindow, k.encryptRounds[x], k.roundKeys[x / 3], k.encryptRounds[x + 1]);
+                LBoxVisualization.GenerateContent(mainWindow, k.encryptRounds[x]);
             }
+
+            x = KeyGenBox.buttons.IndexOf(b);
+            if (x != -1)
+            {
+                LBoxVisualization.GenerateContent(mainWindow, k.keyGenRounds[x / 4 * 3 + 1]);
+            }
+
         }
     }
 }

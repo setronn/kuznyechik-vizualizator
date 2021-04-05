@@ -20,8 +20,15 @@ namespace KuznyechikVizualizator
     {
         private static bool isActive = false;
         private static Canvas boxCanvas;
+        private static Canvas scrollerCanvas;
+        private static Grid grid1;
         private static List<Expander> expanders;
         private static List<RowDefinition> rows;
+        private static List<List<TextBox>> textBoxes;
+        private static List<List<byte>> vectors;
+        private static int expandedHeight = 474;
+        private static TextBox expTb;
+        private static List<ColumnDefinition> columns;
         public static bool IsActive()
         {
             return isActive;
@@ -48,14 +55,14 @@ namespace KuznyechikVizualizator
             };
             boxCanvas.Children.Add(mainSV);
 
-            Canvas scrollerCanvas = new Canvas
+            scrollerCanvas = new Canvas
             {
                 Height = 832,
                 Width = 656
             };
             mainSV.Content = scrollerCanvas;
 
-            Grid grid1 = new Grid
+            grid1 = new Grid
             {
                 Height = 812,
                 Width = 636,
@@ -108,7 +115,7 @@ namespace KuznyechikVizualizator
                 grid1.RowDefinitions.Add(rows[i]);
             }
 
-            List<ColumnDefinition> columns = new List<ColumnDefinition>();
+            columns = new List<ColumnDefinition>();
             for (int i = 0; i < 18; ++i)
             {
                 columns.Add(new ColumnDefinition());
@@ -147,9 +154,9 @@ namespace KuznyechikVizualizator
             grid1.Children.Add(sBound);
 
 
-            List<List<byte>> vectors = new List<List<byte>>();
+            vectors = new List<List<byte>>();
             vectors.Add(input);
-            List<List<TextBox>> textBoxes = new List<List<TextBox>>();
+            textBoxes = new List<List<TextBox>>();
             expanders = new List<Expander>();
             for (int i = 0; i < 17; ++i)
             {
@@ -206,24 +213,57 @@ namespace KuznyechikVizualizator
             Expander exp = sender as Expander;
             int x = expanders.IndexOf(exp);
             rows[1 + x * 2 + 1].Height = new GridLength(24);
+            scrollerCanvas.Height = scrollerCanvas.Height - expandedHeight;
+            grid1.Height = grid1.Height - expandedHeight;
+            expTb = null;
         }
 
         private static void Lexp_Expanded(object sender, RoutedEventArgs e)
         {
             Expander exp = sender as Expander;
             int x = expanders.IndexOf(exp);
-            TextBox t = new TextBox
+            rows[x * 2 + 2].Height = new GridLength(24 + expandedHeight);
+            scrollerCanvas.Height = scrollerCanvas.Height + expandedHeight;
+            grid1.Height = grid1.Height + expandedHeight;
+
+            expTb = new TextBox
             {
-                Text = "Hello" + Convert.ToInt32(x),
-                Width = 608
+                IsReadOnly = true,
+                Margin = new Thickness(0, 24, 0, 0),
+                Padding = new Thickness(0, 5, 0, 5),
+                Width = 608,
+                Text = "",
+                FontFamily = new FontFamily("Courier New")
             };
-            exp.Content = t;
-            rows[1 + x * 2 + 1].Height = new GridLength(100);
+
+            Grid.SetColumn(expTb, 1);
+            Grid.SetColumnSpan(expTb, 16);
+            Grid.SetRow(expTb, x * 2 + 2);
+            grid1.Children.Add(expTb);
+            List<byte> coefficients = new List<byte>{148, 32, 133, 16, 194, 192, 1, 251, 1, 192, 194, 16, 133, 32, 148, 1};
+
+            UInt16 ans = 0;
+            for (int i = 0; i < 16; ++i)
+            {
+                expTb.Text += "a" + Convert.ToString(15 - i, 10).PadLeft(2, '0') + ") " + textBoxes[x][i].Text.PadLeft(2, ' ') + " = " + Convert.ToString(vectors[x][i], 2).PadLeft(8, '0') + ",    " +
+                           "c" + Convert.ToString(15 - i, 10).PadLeft(2, '0') + ") " + Convert.ToString(coefficients[i], 10).PadLeft(3, ' ') + " = " + Convert.ToString(coefficients[i], 2).PadLeft(8, '0') + ". " + "\n";
+                           
+                ans ^= Kuznyechik.mul(vectors[x][i], coefficients[i]);
+            }
+            for (int i = 0; i < 16; ++i)
+            {
+                expTb.Text += "a" + Convert.ToString(15 - i, 10).PadLeft(2, '0') + " * " + "coef" + Convert.ToString(15 - i, 10).PadLeft(2, '0') + " = " + 
+                           Convert.ToString(vectors[x][i], 2).PadLeft(8, '0') + " * " + Convert.ToString(coefficients[i], 2).PadLeft(8, '0') + " = " + 
+                           Convert.ToString(Kuznyechik.mul(vectors[x][i], coefficients[i]), 2).PadLeft(16, '0') + "\n";
+            }
+            expTb.Text += "Σ(ai * ci) = " + Convert.ToString(ans, 2).PadLeft(16, '0') + "\n";
+            expTb.Text += "Σ(ai * ci) mod x8 + x7 + x6 + x + 1 = " + Convert.ToString(Kuznyechik.norm(ans), 2).PadLeft(8, '0') + " = " + Convert.ToString(Kuznyechik.norm(ans), 16).PadLeft(2, '0').ToUpper();
+            coefficients.Clear();
         }
 
         public static void DeleteContent(MainWindow mainWindow)
         {
-
+            grid1.Children.Clear();
             boxCanvas.Children.Clear();
             isActive = false;
         }
