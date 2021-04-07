@@ -25,7 +25,7 @@ namespace KuznyechikVizualizator.Core
             return isActive;
         }
 
-        public static void GenerateContent(MainWindow mainWindow, List<byte> input, List<byte> output)
+        public static void GenerateContent(MainWindow mainWindow, List<byte> input, List<byte> output, bool reversedMode)
         {
             object wantedNode = mainWindow.FindName("mainGrid");
             Grid mainGrid = wantedNode as Grid;
@@ -142,12 +142,18 @@ namespace KuznyechikVizualizator.Core
 
             Label permBoxLabel = new Label
             {
-                Content = "Permutation box",
                 Margin = new Thickness(0, -4, 0, -2),
                 HorizontalContentAlignment = HorizontalAlignment.Center,
                 VerticalContentAlignment = VerticalAlignment.Top
 
             };
+            if (reversedMode == true)
+            {
+                permBoxLabel.Content = "Reversed Permutation box";
+            } else //reversedMode == false
+            {
+                permBoxLabel.Content = "Permutation box";
+            }
             Grid.SetColumn(permBoxLabel, 1);
             Grid.SetRow(permBoxLabel, 4);
             Grid.SetColumnSpan(permBoxLabel, 16);

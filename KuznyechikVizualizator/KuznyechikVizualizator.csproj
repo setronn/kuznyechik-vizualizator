@@ -93,6 +93,7 @@
     <Compile Include="Core\DecryptBox.cs" />
     <Compile Include="Core\IntroBox.cs" />
     <Compile Include="Core\LBoxVisualization.cs" />
+    <Compile Include="Core\Reversed_LBoxVisualization.cs" />
     <Compile Include="Core\SBoxVisualization.cs" />
     <Compile Include="Core\XBoxVisualization.cs" />
     <Page Include="MainWindow.xaml">

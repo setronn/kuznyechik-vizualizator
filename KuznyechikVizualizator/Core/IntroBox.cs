@@ -85,5 +85,12 @@ namespace KuznyechikVizualizator.Core
                 introGrid.Children.Add(introTb0);
             }   
         }
+
+        public static void DeleteContent(MainWindow mainWindow)
+        {
+            object wantedNode = mainWindow.FindName("introGrid");
+            Grid introGrid = wantedNode as Grid;
+            introGrid.Children.Clear();
+        }
     }
 }

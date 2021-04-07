@@ -19,12 +19,16 @@ namespace KuznyechikVizualizator.Core
     {
         private static List<TextBlock> textBlocks = new List<TextBlock>();
         public static List<Button> buttons = new List<Button>();
+
         public static void GenerateContent(MainWindow mainWindow, Kuznyechik k)
         {
+            
+            textBlocks.Clear();
+            buttons.Clear();
             object wantedNode = mainWindow.FindName("cryptTabScroller");
             ScrollViewer cryptTabScroller = wantedNode as ScrollViewer;
 
-            Grid encryptGrid = new Grid
+            Grid decryptGrid = new Grid
             {
                 Height = 1440,
                 Width = 640,
@@ -48,7 +52,7 @@ namespace KuznyechikVizualizator.Core
 
             for (int i = 0; i < 8; ++i)
             {
-                encryptGrid.ColumnDefinitions.Add(columns[i]);
+                decryptGrid.ColumnDefinitions.Add(columns[i]);
             }
 
             List<RowDefinition> rows = new List<RowDefinition>();
@@ -88,10 +92,10 @@ namespace KuznyechikVizualizator.Core
 
             for (int i = 0; i < 29; ++i)
             {
-                encryptGrid.RowDefinitions.Add(rows[i]);
+                decryptGrid.RowDefinitions.Add(rows[i]);
             }
 
-            cryptTabScroller.Content = encryptGrid;
+            cryptTabScroller.Content = decryptGrid;
 
 
             List<Line> lines = new List<Line>();
@@ -113,7 +117,7 @@ namespace KuznyechikVizualizator.Core
                     Grid.SetColumn(tb0, 1 + j * 2);
                     Grid.SetRow(tb0, i * 3);
                     textBlocks.Add(tb0);
-                    encryptGrid.Children.Add(tb0);
+                    decryptGrid.Children.Add(tb0);
 
 
                     if (i == 9)
@@ -134,7 +138,7 @@ namespace KuznyechikVizualizator.Core
                     Grid.SetRow(t1, i * 3 + 1);
                     RenderOptions.SetEdgeMode(t1, EdgeMode.Aliased);
                     lines.Add(t1);
-                    encryptGrid.Children.Add(t1);
+                    decryptGrid.Children.Add(t1);
 
                     Polygon p1 = new Polygon
                     {
@@ -145,12 +149,12 @@ namespace KuznyechikVizualizator.Core
                     Grid.SetColumn(p1, 1 + j * 2);
                     Grid.SetRow(p1, i * 3 + 1);
                     polygons.Add(p1);
-                    encryptGrid.Children.Add(p1);
+                    decryptGrid.Children.Add(p1);
                 }
 
                 Label l0 = new Label
                 {
-                    Content = "K" + i.ToString(),
+                    Content = "K" + (9 - i).ToString(),
                     FontFamily = new FontFamily("Times New Roman"),
                     FontSize = 16,
                     VerticalAlignment = VerticalAlignment.Top,
@@ -159,7 +163,7 @@ namespace KuznyechikVizualizator.Core
                 Grid.SetColumn(l0, 2);
                 Grid.SetRow(l0, i * 3);
                 labels.Add(l0);
-                encryptGrid.Children.Add(l0);
+                decryptGrid.Children.Add(l0);
 
                 Line vertt = new Line
                 {
@@ -173,7 +177,7 @@ namespace KuznyechikVizualizator.Core
                 Grid.SetRow(vertt, i * 3);
                 RenderOptions.SetEdgeMode(vertt, EdgeMode.Aliased);
                 lines.Add(vertt);
-                encryptGrid.Children.Add(vertt);
+                decryptGrid.Children.Add(vertt);
 
                 Polygon vertp = new Polygon
                 {
@@ -184,7 +188,7 @@ namespace KuznyechikVizualizator.Core
                 Grid.SetColumn(vertp, 2);
                 Grid.SetRow(vertp, i * 3);
                 polygons.Add(vertp);
-                encryptGrid.Children.Add(vertp);
+                decryptGrid.Children.Add(vertp);
 
                 Line t0 = new Line
                 {
@@ -199,7 +203,7 @@ namespace KuznyechikVizualizator.Core
                 Grid.SetRow(t0, i * 3 + 1);
                 RenderOptions.SetEdgeMode(t0, EdgeMode.Aliased);
                 lines.Add(t0);
-                encryptGrid.Children.Add(t0);
+                decryptGrid.Children.Add(t0);
 
                 Button x = new Button
                 {
@@ -212,27 +216,13 @@ namespace KuznyechikVizualizator.Core
                 Grid.SetColumn(x, 2);
                 Grid.SetRow(x, i * 3 + 1);
                 buttons.Add(x);
-                encryptGrid.Children.Add(x);
+                decryptGrid.Children.Add(x);
                 x.Click += new RoutedEventHandler(mainWindow.X_Click);
 
                 if (i == 9)
                 {
                     break;
                 }
-
-                Button s = new Button
-                {
-                    Content = "S",
-                    FontFamily = new FontFamily("Times New Roman"),
-                    FontSize = 18,
-                    Background = Brushes.Transparent,
-
-                };
-                Grid.SetColumn(s, 4);
-                Grid.SetRow(s, i * 3 + 1);
-                buttons.Add(s);
-                encryptGrid.Children.Add(s);
-                s.Click += new RoutedEventHandler(mainWindow.S_Click);
 
                 Button l = new Button
                 {
@@ -242,11 +232,53 @@ namespace KuznyechikVizualizator.Core
                     Background = Brushes.Transparent
 
                 };
-                Grid.SetColumn(l, 6);
+                Grid.SetColumn(l, 4);
                 Grid.SetRow(l, i * 3 + 1);
                 buttons.Add(l);
-                encryptGrid.Children.Add(l);
+                decryptGrid.Children.Add(l);
                 l.Click += new RoutedEventHandler(mainWindow.L_Click);
+                Label ltb = new Label
+                {
+                    Content = "-1",
+                    FontFamily = new FontFamily("Times New Roman"),
+                    FontSize = 12,
+                    HorizontalContentAlignment = HorizontalAlignment.Center,
+                    VerticalContentAlignment = VerticalAlignment.Center,
+                    IsHitTestVisible = false,
+                    Margin = new Thickness(20, -10, 0, 0)
+                    
+                };
+                Grid.SetColumn(ltb, 4);
+                Grid.SetRow(ltb, i * 3 + 1);
+                decryptGrid.Children.Add(ltb);
+
+                Button s = new Button
+                {
+                    Content = "S",
+                    FontFamily = new FontFamily("Times New Roman"),
+                    FontSize = 18,
+                    Background = Brushes.Transparent,
+
+                };
+                Grid.SetColumn(s, 6);
+                Grid.SetRow(s, i * 3 + 1);
+                buttons.Add(s);
+                decryptGrid.Children.Add(s);
+                s.Click += new RoutedEventHandler(mainWindow.S_Click);
+                Label rtb = new Label
+                {
+                    Content = "-1",
+                    FontFamily = new FontFamily("Times New Roman"),
+                    FontSize = 12,
+                    HorizontalContentAlignment = HorizontalAlignment.Center,
+                    VerticalContentAlignment = VerticalAlignment.Center,
+                    IsHitTestVisible = false,
+                    Margin = new Thickness(20, -10, 0, 0)
+
+                };
+                Grid.SetColumn(rtb, 6);
+                Grid.SetRow(rtb, i * 3 + 1);
+                decryptGrid.Children.Add(rtb);
 
                 Line t3 = new Line
                 {
@@ -261,7 +293,7 @@ namespace KuznyechikVizualizator.Core
                 Grid.SetRow(t3, i * 3 + 1);
                 RenderOptions.SetEdgeMode(t3, EdgeMode.Aliased);
                 lines.Add(t3);
-                encryptGrid.Children.Add(t3);
+                decryptGrid.Children.Add(t3);
 
                 Line t4 = new Line
                 {
@@ -277,7 +309,7 @@ namespace KuznyechikVizualizator.Core
                 Grid.SetRowSpan(t4, 2);
                 RenderOptions.SetEdgeMode(t4, EdgeMode.Aliased);
                 lines.Add(t4);
-                encryptGrid.Children.Add(t4);
+                decryptGrid.Children.Add(t4);
 
                 Line t5 = new Line
                 {
@@ -293,7 +325,7 @@ namespace KuznyechikVizualizator.Core
                 Grid.SetRow(t5, i * 3 + 2);
                 RenderOptions.SetEdgeMode(t5, EdgeMode.Aliased);
                 lines.Add(t5);
-                encryptGrid.Children.Add(t5);
+                decryptGrid.Children.Add(t5);
 
                 Line t6 = new Line
                 {
@@ -309,7 +341,7 @@ namespace KuznyechikVizualizator.Core
                 Grid.SetRow(t6, i * 3 + 2);
                 RenderOptions.SetEdgeMode(t6, EdgeMode.Aliased);
                 lines.Add(t6);
-                encryptGrid.Children.Add(t6);
+                decryptGrid.Children.Add(t6);
 
             }
 
@@ -327,7 +359,7 @@ namespace KuznyechikVizualizator.Core
             Grid.SetRow(tt0, 28);
             RenderOptions.SetEdgeMode(tt0, EdgeMode.Aliased);
             lines.Add(tt0);
-            encryptGrid.Children.Add(tt0);
+            decryptGrid.Children.Add(tt0);
 
 
             Polygon tp0 = new Polygon
@@ -339,7 +371,7 @@ namespace KuznyechikVizualizator.Core
             Grid.SetColumn(tp0, 1);
             Grid.SetRow(tp0, 28);
             polygons.Add(tp0);
-            encryptGrid.Children.Add(tp0);
+            decryptGrid.Children.Add(tp0);
 
             TextBlock lasttb = new TextBlock
             {
@@ -348,11 +380,11 @@ namespace KuznyechikVizualizator.Core
                 Foreground = new SolidColorBrush(Color.FromRgb(127, 127, 127)),
                 FontStyle = FontStyles.Italic
             };
-            lasttb.Inlines.Add(BitConverter.ToString(k.ciphertext.ToArray()).Replace("-", "").Substring(0, 16) + "\n" + BitConverter.ToString(k.cryptRounds[0].ToArray()).Replace("-", "").Substring(16, 16));
+            lasttb.Inlines.Add(BitConverter.ToString(k.plaintext.ToArray()).Replace("-", "").Substring(0, 16) + "\n" + BitConverter.ToString(k.plaintext.ToArray()).Replace("-", "").Substring(16, 16));
             Grid.SetColumn(lasttb, 3);
             Grid.SetRow(lasttb, 27);
             textBlocks.Add(lasttb);
-            encryptGrid.Children.Add(lasttb);
+            decryptGrid.Children.Add(lasttb);
 
             Line tt1 = new Line
             {
@@ -368,7 +400,7 @@ namespace KuznyechikVizualizator.Core
             Grid.SetRow(tt1, 28);
             RenderOptions.SetEdgeMode(tt1, EdgeMode.Aliased);
             lines.Add(tt1);
-            encryptGrid.Children.Add(tt1);
+            decryptGrid.Children.Add(tt1);
 
             Polygon tp1 = new Polygon
             {
@@ -379,7 +411,7 @@ namespace KuznyechikVizualizator.Core
             Grid.SetColumn(tp1, 7);
             Grid.SetRow(tp1, 28);
             polygons.Add(tp1);
-            encryptGrid.Children.Add(tp1);
+            decryptGrid.Children.Add(tp1);
         }
         public static void DeleteContent(MainWindow mainWindow)
         {

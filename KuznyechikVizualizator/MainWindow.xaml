@@ -34,6 +34,7 @@
             </Grid.RowDefinitions>
 
             <TextBox Name="textBoxCiphertext" 
+                     TextChanged="textBoxCiphertext_TextChanged"
                      Text="7F679D90BEBC24305A468D42B9D4EDCD"
                      Grid.Row="4"
                      Grid.Column="3"
@@ -50,7 +51,7 @@
                     Click="changeMode_Click"
                     
             >
-                <Canvas>
+                <Canvas IsHitTestVisible="false">
                     <Line
                         X1="-20" Y1="0"
                           X2="20" Y2="0"
@@ -67,10 +68,10 @@
                              Fill="Black"
                     />
                 </Canvas>
-                
+
             </Button>
 
-            
+
 
             <Label Margin="0, -4, 0, -4"
                    Content="Key" 
@@ -78,9 +79,8 @@
                    Grid.Row="0"
                    Grid.Column="2"
             />
-                
-            <TextBox Name="textBoxKey"
-                     Text="8899AABBCCDDEEFF0011223344556677FEDCBA98765432100123456789ABCDEF" 
+
+            <TextBox x:Name="textBoxKey"
                      TextChanged="textBoxKey_TextChanged"
                      Grid.Row="1"
                      Grid.Column="1"
@@ -88,24 +88,23 @@
                      HorizontalAlignment="Center"
                      />
             <Label Margin="0, -4, 0, -4"
-                   Content=" Plaintext" 
+                   Content="Plaintext" 
                    HorizontalContentAlignment="Center"
                    Grid.Row="3"
                    Grid.Column="1"
                    />
             <Label Margin="0, -4, 0, -4"
-                   Content=" Ciphertext" 
+                   Content="Ciphertext" 
                    HorizontalContentAlignment="Center"
                    Grid.Row="3"
                    Grid.Column="3"
                    />
             <TextBox x:Name="textBoxPlaintext"  
-                     Text="1122334455667700FFEEDDCCBBAA9988" 
                      TextChanged="textBoxPlaintext_TextChanged"
                      Grid.Row="4"
                      Grid.Column="1"
                      />
-            
+
 
         </Grid>
 
@@ -122,11 +121,8 @@
                 <ScrollViewer x:Name="keyTabScroller" VerticalScrollBarVisibility="Visible"/>
             </TabItem>
             <TabItem x:Name="cryptTab" Header="Encrypt">
-                <ScrollViewer x:Name="cryptTabScroller" VerticalScrollBarVisibility="Visible"/>
+                <ScrollViewer Name="cryptTabScroller" VerticalScrollBarVisibility="Visible"/>
             </TabItem>
         </TabControl>
     </Grid>
-
-    
-        
 </Window>

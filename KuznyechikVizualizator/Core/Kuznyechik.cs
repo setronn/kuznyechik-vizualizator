@@ -18,6 +18,7 @@ namespace KuznyechikVizualizator.Core
         public List<List<byte>> cryptRounds;    //size = 28x{128b;16B}
         public List<byte> plaintext;       //size = {128b;32B}
         public List<byte> ciphertext;      //size = {128b;32B}
+        public bool encryptMode;
 
         public Kuznyechik(string pText, string mKey, string cText)
         {
@@ -28,9 +29,11 @@ namespace KuznyechikVizualizator.Core
             keyGen();
             if (pText == "")
             {
+                encryptMode = false;
                 decrypt();
             } else if (cText == "")
             {
+                encryptMode = true;
                 encrypt();
             }
             else
@@ -41,7 +44,15 @@ namespace KuznyechikVizualizator.Core
 
         public override string ToString()
         {
-            return BitConverter.ToString(ciphertext.ToArray()).Replace("-", "");
+            if (encryptMode == true)
+            {
+                return BitConverter.ToString(ciphertext.ToArray()).Replace("-", "");
+            }
+            else //encryptMode == false
+            {
+                return BitConverter.ToString(plaintext.ToArray()).Replace("-", "");
+            }
+            
         }
 
         static public List<byte> toList(string x)
@@ -74,12 +85,12 @@ namespace KuznyechikVizualizator.Core
             return answer;
         }
 
-        static public List<byte> reverse_S(List<byte> v)
+        static public List<byte> reversed_S(List<byte> v)
         {
             List<byte> answer = new List<byte>(16) { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             for (int i = 0; i < 16; ++i)
             {
-                answer[i] = reverse_s(v[i]);
+                answer[i] = reversed_s(v[i]);
             }
             return answer;
         }
@@ -94,12 +105,12 @@ namespace KuznyechikVizualizator.Core
             return ans;
         }
 
-        static public List<byte> reverse_L(List<byte> v)
+        static public List<byte> reversed_L(List<byte> v)
         {
             List<byte> ans = v;
             for (int i = 0; i < 16; ++i)
             {
-                ans = reverse_R(ans);
+                ans = reversed_R(ans);
             }
             return ans;
         }
@@ -115,7 +126,7 @@ namespace KuznyechikVizualizator.Core
             return ans;
         }
 
-        static public List<byte> reverse_R(List<byte> v)
+        static public List<byte> reversed_R(List<byte> v)
         {
             List<byte> ans = new List<byte>(16) { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             List<byte> newv = v.ToList();
@@ -185,10 +196,10 @@ namespace KuznyechikVizualizator.Core
             cryptRounds.Add(plaintext);
             for (int i = 0; i < 9; ++i)
             {
-                cryptRounds.Add(reverse_L(plaintext));
-                cryptRounds.Add(reverse_S(reverse_L(plaintext)));
-                cryptRounds.Add(X(reverse_S(reverse_L(plaintext)), roundKeys[8 - i]));
-                plaintext = X(reverse_S(reverse_L(plaintext)), roundKeys[8 - i]);
+                cryptRounds.Add(reversed_L(plaintext));
+                cryptRounds.Add(reversed_S(reversed_L(plaintext)));
+                cryptRounds.Add(X(reversed_S(reversed_L(plaintext)), roundKeys[8 - i]));
+                plaintext = X(reversed_S(reversed_L(plaintext)), roundKeys[8 - i]);
             }
         }
 
@@ -208,7 +219,7 @@ namespace KuznyechikVizualizator.Core
             return s_array[x];
         }
 
-        static public byte reverse_s(byte x)
+        static public byte reversed_s(byte x)
         {
             byte[] s_array = new byte[256] { 165, 45, 50, 143, 14, 48, 56, 192, 84, 230, 158, 57, 85, 126, 82, 145, 100, 3, 87, 90, 28, 96, 7, 24,
                 33, 114, 168, 209, 41, 198, 164, 63, 224, 39, 141, 12, 130, 234, 174, 180, 154, 99, 73, 229, 66, 228, 21, 183, 200, 6, 112, 157,

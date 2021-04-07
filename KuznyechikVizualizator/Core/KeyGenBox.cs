@@ -22,6 +22,8 @@ namespace KuznyechikVizualizator.Core
 
         public static void GenerateContent(MainWindow mainWindow, Kuznyechik k)
         {
+            textBlocks.Clear();
+            buttons.Clear();
             object wantedNode = mainWindow.FindName("keyTabScroller");
             ScrollViewer keyTabScroller = wantedNode as ScrollViewer;
 
@@ -427,6 +429,13 @@ namespace KuznyechikVizualizator.Core
                 keyGrid.Children.Add(l7);
 
             }
+        }
+
+        public static void DeleteContent(MainWindow mainWindow)
+        {
+            object wantedNode = mainWindow.FindName("keyTabScroller");
+            ScrollViewer keyTabScroller = wantedNode as ScrollViewer;
+            keyTabScroller.Content = null;
         }
     }
 }

@@ -15,8 +15,7 @@ using System.Windows.Shapes;
 
 namespace KuznyechikVizualizator.Core
 {
-
-    class LBoxVisualization
+    class Reversed_LBoxVisualization
     {
         private static bool isActive = false;
         private static ScrollViewer mainSV;
@@ -54,7 +53,8 @@ namespace KuznyechikVizualizator.Core
             Grid.SetRow(mainSV, 1);
             mainGrid.Children.Add(mainSV);
 
-            canvas1 = new Canvas() {
+            canvas1 = new Canvas()
+            {
                 Height = 812,
                 Width = 636
             };
@@ -112,14 +112,21 @@ namespace KuznyechikVizualizator.Core
                     Grid.SetRow(textBoxes[i][j], i * 2);
                     grid1.Children.Add(textBoxes[i][j]);
                 }
-                vectors.Add(Kuznyechik.R(vectors[i]));
+                vectors.Add(Kuznyechik.reversed_R(vectors[i]));
                 if (i == 16)
                 {
                     break;
                 }
+                byte t = vectors[i][0];
+                for (int k = 0; k < 15; ++k)
+                {
+                    vectors[i][k] = vectors[i][k + 1];
+                }
+                vectors[i][15] = t;
+
                 Label ans = new Label
                 {
-                    Content = "l(" + BitConverter.ToString(vectors[i].ToArray()) + ") = " + BitConverter.ToString((new List<byte> { vectors[i + 1][0] }).ToArray()),
+                    Content = "l(" + BitConverter.ToString(vectors[i].ToArray()) + ") = " + BitConverter.ToString((new List<byte> { vectors[i + 1][15] }).ToArray()),
                     HorizontalContentAlignment = HorizontalAlignment.Left,
                     FontStyle = FontStyles.Italic
                 };
@@ -128,7 +135,7 @@ namespace KuznyechikVizualizator.Core
                 Grid.SetRow(ans, i * 2 + 1);
                 grid1.Children.Add(ans);
                 ans.Measure(new Size(Double.PositiveInfinity, Double.PositiveInfinity));
-                
+
                 Expander lexp = new Expander
                 {
                     HorizontalAlignment = HorizontalAlignment.Left,
@@ -180,26 +187,25 @@ namespace KuznyechikVizualizator.Core
             Grid.SetColumnSpan(expTb, 16);
             Grid.SetRow(expTb, x * 2 + 1);
             grid1.Children.Add(expTb);
-            List<byte> coefficients = new List<byte>{148, 32, 133, 16, 194, 192, 1, 251, 1, 192, 194, 16, 133, 32, 148, 1};
+            List<byte> coefficients = new List<byte> { 148, 32, 133, 16, 194, 192, 1, 251, 1, 192, 194, 16, 133, 32, 148, 1 };
 
             UInt16 ans = 0;
             for (int i = 0; i < 16; ++i)
             {
                 expTb.Text += "a" + Convert.ToString(15 - i, 10).PadLeft(2, '0') + ") " + textBoxes[x][i].Text.PadLeft(2, ' ') + " = " + Convert.ToString(vectors[x][i], 2).PadLeft(8, '0') + ",    " +
                            "c" + Convert.ToString(15 - i, 10).PadLeft(2, '0') + ") " + Convert.ToString(coefficients[i], 10).PadLeft(3, ' ') + " = " + Convert.ToString(coefficients[i], 2).PadLeft(8, '0') + ". " + "\n";
-                           
+
                 ans ^= Kuznyechik.mul(vectors[x][i], coefficients[i]);
             }
             for (int i = 0; i < 16; ++i)
             {
-                expTb.Text += "a" + Convert.ToString(15 - i, 10).PadLeft(2, '0') + " * " + "c" + Convert.ToString(15 - i, 10).PadLeft(2, '0') + " = " + 
-                           Convert.ToString(vectors[x][i], 2).PadLeft(8, '0') + " * " + Convert.ToString(coefficients[i], 2).PadLeft(8, '0') + " = " + 
+                expTb.Text += "a" + Convert.ToString(15 - i, 10).PadLeft(2, '0') + " * " + "c" + Convert.ToString(15 - i, 10).PadLeft(2, '0') + " = " +
+                           Convert.ToString(vectors[x][i], 2).PadLeft(8, '0') + " * " + Convert.ToString(coefficients[i], 2).PadLeft(8, '0') + " = " +
                            Convert.ToString(Kuznyechik.mul(vectors[x][i], coefficients[i]), 2).PadLeft(16, '0') + "\n";
             }
             expTb.Text += "Σ(ai * ci) = " + Convert.ToString(ans, 2).PadLeft(16, '0') + "\n";
             expTb.Text += "Σ(ai * ci) mod x8 + x7 + x6 + x + 1 = " + Convert.ToString(Kuznyechik.norm(ans), 2).PadLeft(8, '0') + " = " + Convert.ToString(Kuznyechik.norm(ans), 16).PadLeft(2, '0').ToUpper();
             coefficients.Clear();
-            isActive = true;
         }
 
         public static void DeleteContent(MainWindow mainWindow)
@@ -208,6 +214,5 @@ namespace KuznyechikVizualizator.Core
             mainSV.Height = 0;
             isActive = false;
         }
-
     }
 }

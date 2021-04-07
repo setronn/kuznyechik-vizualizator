@@ -22,6 +22,8 @@ namespace KuznyechikVizualizator.Core
 
         public static void GenerateContent(MainWindow mainWindow, Kuznyechik k)
         {
+            textBlocks.Clear();
+            buttons.Clear();
             object wantedNode = mainWindow.FindName("cryptTabScroller");
             ScrollViewer cryptTabScroller = wantedNode as ScrollViewer;
 
@@ -349,7 +351,7 @@ namespace KuznyechikVizualizator.Core
                 Foreground = new SolidColorBrush(Color.FromRgb(127, 127, 127)),
                 FontStyle = FontStyles.Italic
             };
-            lasttb.Inlines.Add(BitConverter.ToString(k.ciphertext.ToArray()).Replace("-", "").Substring(0, 16) + "\n" + BitConverter.ToString(k.cryptRounds[0].ToArray()).Replace("-", "").Substring(16, 16));
+            lasttb.Inlines.Add(BitConverter.ToString(k.ciphertext.ToArray()).Replace("-", "").Substring(0, 16) + "\n" + BitConverter.ToString(k.ciphertext.ToArray()).Replace("-", "").Substring(16, 16));
             Grid.SetColumn(lasttb, 3);
             Grid.SetRow(lasttb, 27);
             textBlocks.Add(lasttb);
@@ -381,21 +383,6 @@ namespace KuznyechikVizualizator.Core
             Grid.SetRow(tp1, 28);
             polygons.Add(tp1);
             encryptGrid.Children.Add(tp1);
-        }
-
-        public static void RefreshContent(MainWindow mainWindow, Kuznyechik k)
-        {
-            if (textBlocks.Count != 0)
-            {
-                for (int i = 0; i < 27; i++)
-                {
-                    textBlocks[i].Inlines.Clear();
-                    textBlocks[i].Inlines.Add(BitConverter.ToString(k.cryptRounds[i].ToArray()).Replace("-", "").Substring(0, 16) + "\n" + BitConverter.ToString(k.cryptRounds[0].ToArray()).Replace("-", "").Substring(16, 16));
-                }
-                textBlocks[27].Inlines.Clear();
-                textBlocks[27].Inlines.Add(BitConverter.ToString(k.ciphertext.ToArray()).Replace("-", "").Substring(0, 16) + "\n" + BitConverter.ToString(k.cryptRounds[0].ToArray()).Replace("-", "").Substring(16, 16));
-            }
-            
         }
 
         public static void DeleteContent(MainWindow mainWindow)
