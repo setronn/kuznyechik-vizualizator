@@ -13,13 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace KuznyechikVizualizator
+namespace KuznyechikVizualizator.Core
 {
-    class EncryptBox
+    class DecryptBox
     {
         private static List<TextBlock> textBlocks = new List<TextBlock>();
         public static List<Button> buttons = new List<Button>();
-
         public static void GenerateContent(MainWindow mainWindow, Kuznyechik k)
         {
             object wantedNode = mainWindow.FindName("cryptTabScroller");
@@ -95,7 +94,7 @@ namespace KuznyechikVizualizator
             cryptTabScroller.Content = encryptGrid;
 
 
-            List <Line> lines = new List<Line>();
+            List<Line> lines = new List<Line>();
             List<Polygon> polygons = new List<Polygon>();
             List<Label> labels = new List<Label>();
 
@@ -110,7 +109,7 @@ namespace KuznyechikVizualizator
                         Foreground = new SolidColorBrush(Color.FromRgb(127, 127, 127)),
                         FontStyle = FontStyles.Italic
                     };
-                    tb0.Inlines.Add(BitConverter.ToString(k.encryptRounds[3 * i + j].ToArray()).Replace("-", "").Substring(0, 16) + "\n" + BitConverter.ToString(k.encryptRounds[3 * i + j].ToArray()).Replace("-", "").Substring(16, 16));
+                    tb0.Inlines.Add(BitConverter.ToString(k.cryptRounds[3 * i + j].ToArray()).Replace("-", "").Substring(0, 16) + "\n" + BitConverter.ToString(k.cryptRounds[3 * i + j].ToArray()).Replace("-", "").Substring(16, 16));
                     Grid.SetColumn(tb0, 1 + j * 2);
                     Grid.SetRow(tb0, i * 3);
                     textBlocks.Add(tb0);
@@ -349,7 +348,7 @@ namespace KuznyechikVizualizator
                 Foreground = new SolidColorBrush(Color.FromRgb(127, 127, 127)),
                 FontStyle = FontStyles.Italic
             };
-            lasttb.Inlines.Add(BitConverter.ToString(k.ciphertext.ToArray()).Replace("-", "").Substring(0, 16) + "\n" + BitConverter.ToString(k.encryptRounds[0].ToArray()).Replace("-", "").Substring(16, 16));
+            lasttb.Inlines.Add(BitConverter.ToString(k.ciphertext.ToArray()).Replace("-", "").Substring(0, 16) + "\n" + BitConverter.ToString(k.cryptRounds[0].ToArray()).Replace("-", "").Substring(16, 16));
             Grid.SetColumn(lasttb, 3);
             Grid.SetRow(lasttb, 27);
             textBlocks.Add(lasttb);
@@ -382,28 +381,11 @@ namespace KuznyechikVizualizator
             polygons.Add(tp1);
             encryptGrid.Children.Add(tp1);
         }
-
-        public static void RefreshContent(MainWindow mainWindow, Kuznyechik k)
-        {
-            if (textBlocks.Count != 0)
-            {
-                for (int i = 0; i < 27; i++)
-                {
-                    textBlocks[i].Inlines.Clear();
-                    textBlocks[i].Inlines.Add(BitConverter.ToString(k.encryptRounds[i].ToArray()).Replace("-", "").Substring(0, 16) + "\n" + BitConverter.ToString(k.encryptRounds[0].ToArray()).Replace("-", "").Substring(16, 16));
-                }
-                textBlocks[27].Inlines.Clear();
-                textBlocks[27].Inlines.Add(BitConverter.ToString(k.ciphertext.ToArray()).Replace("-", "").Substring(0, 16) + "\n" + BitConverter.ToString(k.encryptRounds[0].ToArray()).Replace("-", "").Substring(16, 16));
-            }
-            
-        }
-
         public static void DeleteContent(MainWindow mainWindow)
         {
             object wantedNode = mainWindow.FindName("cryptTabScroller");
             ScrollViewer cryptTabScroller = wantedNode as ScrollViewer;
             cryptTabScroller.Content = null;
         }
-
     }
 }

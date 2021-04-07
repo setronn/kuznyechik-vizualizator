@@ -13,13 +13,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace KuznyechikVizualizator
+namespace KuznyechikVizualizator.Core
 {
 
     class LBoxVisualization
     {
         private static bool isActive = false;
-        private static Canvas boxCanvas;
+        private static ScrollViewer mainSV;
         private static Canvas scrollerCanvas;
         private static Grid grid1;
         private static List<Expander> expanders;
@@ -39,34 +39,23 @@ namespace KuznyechikVizualizator
             object wantedNode = mainWindow.FindName("mainGrid");
             Grid mainGrid = wantedNode as Grid;
 
-            boxCanvas = new Canvas { 
-                Width = 640,
-                HorizontalAlignment = HorizontalAlignment.Center
-            };
-            boxCanvas.Margin = new Thickness(20, 20, 20, 20);
-            Grid.SetRow(boxCanvas, 1);
-            mainGrid.Children.Add(boxCanvas);
-
-            ScrollViewer mainSV = new ScrollViewer
+            mainSV = new ScrollViewer
             {
                 VerticalScrollBarVisibility = ScrollBarVisibility.Visible,
-                Height = 639
-                
-            };
-            boxCanvas.Children.Add(mainSV);
+                Height = 630,
+                Width = 653,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Top,
+                Margin = new Thickness(0, 20, 0, 0)
 
-            scrollerCanvas = new Canvas
-            {
-                Height = 832,
-                Width = 656
             };
-            mainSV.Content = scrollerCanvas;
+            Grid.SetRow(mainSV, 1);
+            mainGrid.Children.Add(mainSV);
 
             grid1 = new Grid
             {
                 Height = 812,
                 Width = 636,
-                Margin = new Thickness(10, 10, 10, 10)
             };
 
             rows = new List<RowDefinition>();
@@ -142,7 +131,7 @@ namespace KuznyechikVizualizator
             {
                 grid1.ColumnDefinitions.Add(columns[i]);
             }
-            scrollerCanvas.Children.Add(grid1);
+            mainSV.Content = grid1;
 
             Rectangle sBound = new Rectangle
             {
@@ -213,7 +202,6 @@ namespace KuznyechikVizualizator
             Expander exp = sender as Expander;
             int x = expanders.IndexOf(exp);
             rows[1 + x * 2 + 1].Height = new GridLength(24);
-            scrollerCanvas.Height = scrollerCanvas.Height - expandedHeight;
             grid1.Height = grid1.Height - expandedHeight;
             expTb = null;
         }
@@ -223,7 +211,6 @@ namespace KuznyechikVizualizator
             Expander exp = sender as Expander;
             int x = expanders.IndexOf(exp);
             rows[x * 2 + 2].Height = new GridLength(24 + expandedHeight);
-            scrollerCanvas.Height = scrollerCanvas.Height + expandedHeight;
             grid1.Height = grid1.Height + expandedHeight;
 
             expTb = new TextBox
@@ -252,7 +239,7 @@ namespace KuznyechikVizualizator
             }
             for (int i = 0; i < 16; ++i)
             {
-                expTb.Text += "a" + Convert.ToString(15 - i, 10).PadLeft(2, '0') + " * " + "coef" + Convert.ToString(15 - i, 10).PadLeft(2, '0') + " = " + 
+                expTb.Text += "a" + Convert.ToString(15 - i, 10).PadLeft(2, '0') + " * " + "c" + Convert.ToString(15 - i, 10).PadLeft(2, '0') + " = " + 
                            Convert.ToString(vectors[x][i], 2).PadLeft(8, '0') + " * " + Convert.ToString(coefficients[i], 2).PadLeft(8, '0') + " = " + 
                            Convert.ToString(Kuznyechik.mul(vectors[x][i], coefficients[i]), 2).PadLeft(16, '0') + "\n";
             }
@@ -264,7 +251,7 @@ namespace KuznyechikVizualizator
         public static void DeleteContent(MainWindow mainWindow)
         {
             grid1.Children.Clear();
-            boxCanvas.Children.Clear();
+            mainSV.Height = 0;
             isActive = false;
         }
 

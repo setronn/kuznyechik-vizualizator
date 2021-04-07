@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace KuznyechikVizualizator
+namespace KuznyechikVizualizator.Core
 {
     class SBoxVisualization
     {
@@ -30,8 +30,13 @@ namespace KuznyechikVizualizator
             object wantedNode = mainWindow.FindName("mainGrid");
             Grid mainGrid = wantedNode as Grid;
 
-            boxCanvas = new Canvas();
-            boxCanvas.Margin = new Thickness(80, 10, 10, 10);
+            boxCanvas = new Canvas() {
+                Height = 205,
+                Width = 636,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Top,
+                Margin = new Thickness(0, 20, 0, 0)
+            };
             Grid.SetRow(boxCanvas, 1);
 
             Grid grid1 = new Grid();

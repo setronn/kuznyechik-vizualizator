@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace KuznyechikVizualizator
+namespace KuznyechikVizualizator.Core
 {
     class KeyGenBox
     {

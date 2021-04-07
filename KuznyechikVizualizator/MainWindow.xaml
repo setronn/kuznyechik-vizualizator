@@ -7,82 +7,116 @@
         xmlns:local="clr-namespace:KuznyechikVizualizator"
         mc:Ignorable="d"
         Title="Kuznyechik (GOST 34.12-2015) Vizualization" Height="900" Width="1600" Name ="mainWindow" ResizeMode="NoResize">
-    <Grid x:Name="grid">
+    <Grid x:Name="mainGrid">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="800"/>
-            <ColumnDefinition Width="800"/>
+            <ColumnDefinition Width="700"/>
+            <ColumnDefinition Width="900"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="32"/>
-            <RowDefinition />
+            <RowDefinition Height="140"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
-        <Label x:Name="label_name1" Content="Variables" HorizontalAlignment="Center" VerticalAlignment="Center" Height="26" Margin="170,6,173,0" Width="61" />
+        <Grid Grid.Column="0" Grid.Row="0" Margin="20, 20, 20, 20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="60"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
 
-        <Canvas x:Name="mainBlock" Grid.Column="0" Grid.Row="1">
-            <Grid x:Name="mainGrid" Width="800" Height="839">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="160"/>
-                    <RowDefinition Height="679"/>
-                </Grid.RowDefinitions>
-                <TextBox x:Name="textBoxPlaintext" 
-                         HorizontalAlignment="Left" 
-                         Height="22" 
-                         Margin="80,120,0,0"
-                         VerticalAlignment="Top" 
-                         Width="225" 
-                         Text="1122334455667700FFEEDDCCBBAA9988" 
-                         TextChanged="textBoxPlaintext_TextChanged"
-                         />
-                <TextBox x:Name="textBoxCiphertext" 
-                         Height="22" 
-                         Width="225"
-                         VerticalAlignment="Top"
-                         HorizontalAlignment="Right"
-                         HorizontalContentAlignment="Left"
-                         Margin="0,120,80,0"
-                         />
-                <Label x:Name="label" 
-                       Content="Key" 
-                       HorizontalAlignment="Center" 
-                       Height="26" 
-                       Margin="175,10,175,0" 
-                       VerticalAlignment="Top" 
-                       Width="450"  
-                       HorizontalContentAlignment="Center"
-                       />
-                <TextBox x:Name="textBoxKey" 
-                         Height="22"
-                         Width="450"
-                         Text="8899AABBCCDDEEFF0011223344556677FEDCBA98765432100123456789ABCDEF" 
-                         VerticalAlignment="Top"
-                         HorizontalAlignment="Center"
-                         TextChanged="textBoxKey_TextChanged" 
-                         Margin="175,40,175,0"
-                         />
-                <Label x:Name="labelPlaintext" 
-                       Content=" Plaintext" 
-                       HorizontalAlignment="Left" 
-                       Height="26" 
-                       Margin="80,90,0,0" 
-                       VerticalAlignment="Top" 
-                       Width="225" 
-                       HorizontalContentAlignment="Center"
-                       />
-                <Label x:Name="labelCiphertext" 
-                       Content="Ciphertext" 
-                       Height="26" 
-                       VerticalAlignment="Top" 
-                       HorizontalAlignment="Right" 
-                       HorizontalContentAlignment="Center" 
-                       Width="225" 
-                       Margin="0,90,80,0"
-                       />
-            </Grid>
-        </Canvas>
+            <TextBox Name="textBoxCiphertext" 
+                     Text="7F679D90BEBC24305A468D42B9D4EDCD"
+                     Grid.Row="4"
+                     Grid.Column="3"
+                     IsReadOnly="True"
+                     />
 
-        <TabControl x:Name="tabControl" Grid.Row="1" Grid.Column="2" Margin="0,0,20,20">
+            <Button Name="changeMode"
+                    Grid.Row="3"
+                    Grid.RowSpan="2"
+                    Grid.Column="2"
+                    Margin="10"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Click="changeMode_Click"
+                    
+            >
+                <Canvas>
+                    <Line
+                        X1="-20" Y1="0"
+                          X2="20" Y2="0"
+                          Stroke="Black"
+                    />
+                    <Polygon Name="encryptArrow" 
+                             Points="20, 0, 13, -3, 13, 3"
+                             Visibility="Visible"
+                             Fill="Black"
+                    />
+                    <Polygon Name="decryptArrow" 
+                             Points="-20, 0, -13, -3, -13, 3"
+                             Visibility="Hidden"
+                             Fill="Black"
+                    />
+                </Canvas>
+                
+            </Button>
+
+            
+
+            <Label Margin="0, -4, 0, -4"
+                   Content="Key" 
+                   HorizontalContentAlignment="Center"
+                   Grid.Row="0"
+                   Grid.Column="2"
+            />
+                
+            <TextBox Name="textBoxKey"
+                     Text="8899AABBCCDDEEFF0011223344556677FEDCBA98765432100123456789ABCDEF" 
+                     TextChanged="textBoxKey_TextChanged"
+                     Grid.Row="1"
+                     Grid.Column="1"
+                     Grid.ColumnSpan="3"
+                     HorizontalAlignment="Center"
+                     />
+            <Label Margin="0, -4, 0, -4"
+                   Content=" Plaintext" 
+                   HorizontalContentAlignment="Center"
+                   Grid.Row="3"
+                   Grid.Column="1"
+                   />
+            <Label Margin="0, -4, 0, -4"
+                   Content=" Ciphertext" 
+                   HorizontalContentAlignment="Center"
+                   Grid.Row="3"
+                   Grid.Column="3"
+                   />
+            <TextBox x:Name="textBoxPlaintext"  
+                     Text="1122334455667700FFEEDDCCBBAA9988" 
+                     TextChanged="textBoxPlaintext_TextChanged"
+                     Grid.Row="4"
+                     Grid.Column="1"
+                     />
+            
+
+        </Grid>
+
+        <TabControl 
+            x:Name="tabControl" 
+            Grid.Row="0" 
+            Grid.RowSpan="2"
+            Grid.Column="1" 
+            Margin="20,20,20,20">
             <TabItem Header="Intro">
+                <Grid x:Name="introGrid" Margin="10, 10, 10, 10"/>
             </TabItem>
             <TabItem Header="Keys">
                 <ScrollViewer x:Name="keyTabScroller" VerticalScrollBarVisibility="Visible"/>
@@ -91,6 +125,8 @@
                 <ScrollViewer x:Name="cryptTabScroller" VerticalScrollBarVisibility="Visible"/>
             </TabItem>
         </TabControl>
-        
     </Grid>
+
+    
+        
 </Window>
