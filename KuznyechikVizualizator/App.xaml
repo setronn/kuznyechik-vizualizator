@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:KuznyechikVizualizator"
              StartupUri="MainWindow.xaml">
+   <!-- It's almost over: "_y0u_f1nd" -->
     <Application.Resources>
         <ResourceDictionary>
             <BitmapImage x:Key="logo" UriSource="assets\logo.jpg"></BitmapImage>
